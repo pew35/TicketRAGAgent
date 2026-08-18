@@ -1,0 +1,21 @@
+# Vector database
+weaviate-client>=4.10,<5.0
+
+# Local LLM runtime
+ollama>=0.4,<1.0
+
+# RAG / agent framework
+langchain>=0.3,<0.4
+langchain-community>=0.3,<0.4
+langchain-ollama>=0.2,<0.4
+langchain-weaviate>=0.0.4,<0.1
+
+# API service
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30,<1.0
+pydantic>=2.7,<3.0
+httpx>=0.27,<1.0
+
+# Data processing / utilities
+pandas>=2.2,<3.0
+tqdm>=4.66,<5.0

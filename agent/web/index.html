@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TicketRAGAgent Test</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f5f7f8;
+        --panel: #ffffff;
+        --text: #172026;
+        --muted: #62717b;
+        --line: #d9e0e4;
+        --accent: #176b87;
+        --accent-strong: #0f4f65;
+        --error: #b42318;
+        --ok: #157347;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
+
+      main {
+        width: min(1180px, calc(100vw - 32px));
+        margin: 32px auto;
+      }
+
+      header {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 28px;
+        line-height: 1.1;
+      }
+
+      .subtitle {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.9fr);
+        gap: 16px;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        min-width: 0;
+      }
+
+      .panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .panel-title {
+        margin: 0;
+        font-size: 15px;
+      }
+
+      .composer {
+        padding: 16px;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 118px;
+        resize: vertical;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 12px;
+        color: var(--text);
+        font: inherit;
+        line-height: 1.45;
+      }
+
+      textarea:focus {
+        outline: 2px solid rgba(23, 107, 135, 0.2);
+        border-color: var(--accent);
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      button {
+        border: 0;
+        border-radius: 7px;
+        background: var(--accent);
+        color: #fff;
+        font: inherit;
+        font-weight: 650;
+        padding: 10px 14px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: var(--accent-strong);
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.65;
+      }
+
+      .ghost {
+        background: #e8eef1;
+        color: var(--text);
+      }
+
+      .ghost:hover {
+        background: #dce5e9;
+      }
+
+      .answer {
+        padding: 16px;
+        min-height: 300px;
+        white-space: pre-wrap;
+        line-height: 1.55;
+      }
+
+      .timeline,
+      .sources,
+      .error {
+        padding: 12px 16px 16px;
+      }
+
+      .event {
+        display: grid;
+        grid-template-columns: 160px 1fr 86px;
+        gap: 10px;
+        padding: 9px 0;
+        border-bottom: 1px solid #edf1f3;
+        font-size: 13px;
+      }
+
+      .event:last-child {
+        border-bottom: 0;
+      }
+
+      .code {
+        color: var(--accent);
+        font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+        font-size: 12px;
+        overflow-wrap: anywhere;
+      }
+
+      .time {
+        color: var(--muted);
+        font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+        font-size: 12px;
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .source {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 10px;
+        background: #fbfcfd;
+      }
+
+      .source-title {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: 700;
+        font-size: 13px;
+        margin-bottom: 8px;
+      }
+
+      .source p {
+        margin: 6px 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .error-box {
+        display: none;
+        border-top: 1px solid var(--line);
+        color: var(--error);
+        background: #fff8f7;
+      }
+
+      .status-pill {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 6px 10px;
+        color: var(--muted);
+        background: #fff;
+        font-size: 13px;
+      }
+
+      .status-pill.running {
+        color: var(--accent);
+      }
+
+      .status-pill.done {
+        color: var(--ok);
+      }
+
+      .status-pill.error {
+        color: var(--error);
+      }
+
+      @media (max-width: 860px) {
+        main {
+          width: min(100vw - 20px, 720px);
+          margin: 16px auto;
+        }
+
+        header {
+          display: block;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .event {
+          grid-template-columns: 1fr;
+          gap: 4px;
+        }
+
+        .time {
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <h1>TicketRAGAgent Test</h1>
+          <p class="subtitle">Ask a support question and watch retrieval + generation events stream back.</p>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap">
+          <div id="totalTime" class="status-pill">0 ms</div>
+          <div id="runState" class="status-pill">Idle</div>
+        </div>
+      </header>
+
+      <section class="panel composer">
+        <textarea id="question">How should I handle a customer who cannot reset their password?</textarea>
+        <div class="actions">
+          <button id="askBtn">Ask Agent</button>
+          <button id="clearBtn" class="ghost" type="button">Clear</button>
+        </div>
+      </section>
+
+      <div class="grid" style="margin-top: 16px">
+        <section class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Answer</h2>
+            <span class="muted" id="tokenCount">0 chars</span>
+          </div>
+          <div id="answer" class="answer muted">The streamed answer will appear here.</div>
+        </section>
+
+        <aside class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Process</h2>
+            <span class="muted" id="eventCount">0 events</span>
+          </div>
+          <div id="timeline" class="timeline"></div>
+          <div class="panel-header">
+            <h2 class="panel-title">Sources</h2>
+            <span class="muted" id="sourceCount">0 sources</span>
+          </div>
+          <div id="sources" class="sources muted">No sources yet.</div>
+          <div id="errorBox" class="error-box">
+            <div class="panel-header">
+              <h2 class="panel-title">Error</h2>
+            </div>
+            <pre id="error" class="error"></pre>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <script>
+      const askBtn = document.querySelector("#askBtn");
+      const clearBtn = document.querySelector("#clearBtn");
+      const questionInput = document.querySelector("#question");
+      const answerEl = document.querySelector("#answer");
+      const timelineEl = document.querySelector("#timeline");
+      const sourcesEl = document.querySelector("#sources");
+      const errorBoxEl = document.querySelector("#errorBox");
+      const errorEl = document.querySelector("#error");
+      const runStateEl = document.querySelector("#runState");
+      const totalTimeEl = document.querySelector("#totalTime");
+      const eventCountEl = document.querySelector("#eventCount");
+      const tokenCountEl = document.querySelector("#tokenCount");
+      const sourceCountEl = document.querySelector("#sourceCount");
+
+      let eventCount = 0;
+      let answerChars = 0;
+
+      function resetView() {
+        eventCount = 0;
+        answerChars = 0;
+        answerEl.textContent = "";
+        answerEl.classList.remove("muted");
+        timelineEl.innerHTML = "";
+        sourcesEl.textContent = "No sources yet.";
+        sourcesEl.classList.add("muted");
+        errorBoxEl.style.display = "none";
+        errorEl.textContent = "";
+        eventCountEl.textContent = "0 events";
+        tokenCountEl.textContent = "0 chars";
+        sourceCountEl.textContent = "0 sources";
+        totalTimeEl.textContent = "0 ms";
+        runStateEl.textContent = "Running";
+        runStateEl.className = "status-pill running";
+      }
+
+      function formatDuration(ms) {
+        if (ms === undefined || ms === null) return "";
+        if (ms < 1000) return `${ms} ms`;
+        return `${(ms / 1000).toFixed(2)} s`;
+      }
+
+      function addTimelineEvent(event) {
+        eventCount += 1;
+        eventCountEl.textContent = `${eventCount} events`;
+
+        const row = document.createElement("div");
+        row.className = "event";
+
+        const code = document.createElement("div");
+        code.className = "code";
+        code.textContent = event.code;
+
+        const content = document.createElement("div");
+        content.textContent = event.content;
+
+        const time = document.createElement("div");
+        time.className = "time";
+        const elapsed = event.data?.elapsed_ms;
+        const stage = event.data?.stage_ms;
+        time.textContent = stage !== undefined
+          ? `${formatDuration(elapsed)} / ${formatDuration(stage)}`
+          : formatDuration(elapsed);
+        time.title = stage !== undefined ? "total elapsed / current stage" : "total elapsed";
+
+        row.append(code, content, time);
+        timelineEl.append(row);
+        timelineEl.scrollTop = timelineEl.scrollHeight;
+      }
+
+      function renderSources(sources) {
+        sourceCountEl.textContent = `${sources.length} sources`;
+        sourcesEl.classList.remove("muted");
+        sourcesEl.innerHTML = "";
+
+        if (!sources.length) {
+          sourcesEl.textContent = "No sources found.";
+          sourcesEl.classList.add("muted");
+          return;
+        }
+
+        for (const source of sources) {
+          const card = document.createElement("article");
+          card.className = "source";
+          card.innerHTML = `
+            <div class="source-title">
+              <span>${source.ticket_id || "Unknown ticket"}</span>
+              <span>${Number(source.similarity || 0).toFixed(3)}</span>
+            </div>
+            <p><strong>Issue:</strong> ${source.issue_type || ""}</p>
+            <p><strong>Priority:</strong> ${source.priority || ""}</p>
+            <p><strong>Solution:</strong> ${source.solution || ""}</p>
+          `;
+          sourcesEl.append(card);
+        }
+      }
+
+      function handleEvent(event) {
+        if (event.type === "token") {
+          answerEl.textContent += event.content;
+          answerChars += event.content.length;
+          tokenCountEl.textContent = `${answerChars} chars`;
+          return;
+        }
+
+        addTimelineEvent(event);
+        if (event.data?.elapsed_ms !== undefined) {
+          totalTimeEl.textContent = formatDuration(event.data.elapsed_ms);
+        }
+
+        if (event.type === "sources") {
+          renderSources(event.data?.sources || []);
+        }
+
+        if (event.type === "error") {
+          errorBoxEl.style.display = "block";
+          errorEl.textContent = JSON.stringify(event.data || {}, null, 2);
+          totalTimeEl.textContent = formatDuration(event.data?.elapsed_ms) || totalTimeEl.textContent;
+          runStateEl.textContent = "Error";
+          runStateEl.className = "status-pill error";
+        }
+
+        if (event.type === "done" && runStateEl.textContent !== "Error") {
+          totalTimeEl.textContent = formatDuration(event.data?.elapsed_ms) || totalTimeEl.textContent;
+          runStateEl.textContent = "Done";
+          runStateEl.className = "status-pill done";
+        }
+      }
+
+      async function askAgent() {
+        const question = questionInput.value.trim();
+        if (!question) {
+          questionInput.focus();
+          return;
+        }
+
+        resetView();
+        askBtn.disabled = true;
+
+        try {
+          const response = await fetch("/api/ask/stream", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question }),
+          });
+
+          if (!response.ok || !response.body) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          const reader = response.body.getReader();
+          const decoder = new TextDecoder();
+          let buffer = "";
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split("\n");
+            buffer = lines.pop() || "";
+
+            for (const line of lines) {
+              if (!line.trim()) continue;
+              handleEvent(JSON.parse(line));
+            }
+          }
+
+          if (buffer.trim()) {
+            handleEvent(JSON.parse(buffer));
+          }
+        } catch (error) {
+          errorBoxEl.style.display = "block";
+          errorEl.textContent = String(error);
+          runStateEl.textContent = "Error";
+          runStateEl.className = "status-pill error";
+        } finally {
+          askBtn.disabled = false;
+        }
+      }
+
+      askBtn.addEventListener("click", askAgent);
+      clearBtn.addEventListener("click", () => {
+        questionInput.value = "";
+        questionInput.focus();
+      });
+      questionInput.addEventListener("keydown", (event) => {
+        if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+          askAgent();
+        }
+      });
+    </script>
+  </body>
+</html>
