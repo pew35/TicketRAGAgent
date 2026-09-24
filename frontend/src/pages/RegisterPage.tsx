@@ -56,14 +56,10 @@ export function RegisterPage() {
               <input
                 aria-invalid={Boolean(errors.password)}
                 className={inputClass(Boolean(errors.password))}
-                placeholder="At least 8 characters"
+                placeholder="Choose a password"
                 type="password"
                 {...register("password", {
                   required: "Password is required.",
-                  minLength: {
-                    value: 8,
-                    message: "Password must contain at least 8 characters.",
-                  },
                   maxLength: {
                     value: 128,
                     message: "Password cannot exceed 128 characters.",

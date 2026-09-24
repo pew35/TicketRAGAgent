@@ -15,6 +15,22 @@ flow available without requiring a visitor to run Ollama or Weaviate:
 The same Render URL also serves the frontend, so the application remains usable
 even before GitHub Pages is enabled.
 
+### Public demo account
+
+Use the shared account below to view the seeded test conversations:
+
+- Website: `https://pew35.github.io/TicketRAGAgent/`
+- Email: `demo@ticketragagent.dev`
+- Password: `demo`
+
+Example questions include:
+
+- `My coffee maker arrived damaged. What should support do?`
+- `电器坏了找谁维修？`
+
+The appliance-repair example directs the customer to call the repair technician
+at `4128889799`.
+
 ### Deploy
 
 1. Create a PostgreSQL database and copy its connection string.

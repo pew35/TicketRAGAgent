@@ -29,7 +29,7 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     """Request body for creating a user account."""
 
-    password: str = Field(min_length=8, max_length=128)
+    password: str = Field(min_length=1, max_length=128)
 
 
 class UserUpdate(BaseModel):

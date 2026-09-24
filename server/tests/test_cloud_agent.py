@@ -11,6 +11,7 @@ from server.settings import Settings
 CSV_CONTENT = """ticket_id,issue_type,description,solution,priority
 TCK-1,Damaged Item,Coffee maker arrived with a cracked tank,Replace the damaged unit,High
 TCK-2,Order Status,Carrier tracking has not updated,Check the carrier status,Low
+TCK-3,Appliance Repair,Customer asks 电器坏了找谁维修,请拨打维修员 4128889799,High
 """
 
 
@@ -34,6 +35,11 @@ class CloudTicketAgentTests(IsolatedAsyncioTestCase):
     def test_search_returns_the_relevant_ticket_first(self) -> None:
         sources = self.agent.search("My coffee maker tank is cracked")
         self.assertEqual(sources[0]["ticket_id"], "TCK-1")
+
+    def test_search_supports_chinese_questions(self) -> None:
+        sources = self.agent.search("电器坏了找谁维修？")
+        self.assertEqual(sources[0]["ticket_id"], "TCK-3")
+        self.assertIn("4128889799", sources[0]["solution"])
 
     async def test_answer_falls_back_when_no_api_key_is_configured(self) -> None:
         response = await self.agent.answer("My coffee maker tank is cracked")

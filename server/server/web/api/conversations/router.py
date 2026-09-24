@@ -548,6 +548,9 @@ def _clean_generated_title(title: str, max_length: int = 40) -> str:
             break
 
     cleaned = cleaned.strip(" .,:;!?\"'`")
+    if cleaned.casefold() in {"none", "null", "undefined", "n/a", "na"}:
+        return ""
+
     if len(cleaned) > max_length:
         cleaned = cleaned[:max_length].rsplit(" ", 1)[0] or cleaned[:max_length]
 
