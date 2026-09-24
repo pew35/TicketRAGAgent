@@ -1,14 +1,15 @@
-"""preserve the public demo migration chain
+"""preserve the deployed migration chain
 
-Revision ID: 20260923_0003
-Revises: 20260923_0002
-Create Date: 2026-09-23 23:45:00.000000
+Revision ID: 20260924_0004
+Revises: 20260923_0003
+Create Date: 2026-09-24 08:00:00.000000
 """
 
 from collections.abc import Sequence
 
-revision: str = "20260923_0003"
-down_revision: str | None = "20260923_0002"
+
+revision: str = "20260924_0004"
+down_revision: str | None = "20260923_0003"
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 

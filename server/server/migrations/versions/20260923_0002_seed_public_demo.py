@@ -78,13 +78,6 @@ def upgrade() -> None:
             'Damaged coffee maker replacement',
             'We will arrange a replacement and provide recycling instructions.',
             now(), now()
-        ),
-        (
-            '00000000-0000-4000-8000-000000000202',
-            (SELECT id FROM users WHERE email = '{DEMO_EMAIL}'),
-            'Broken appliance repair contact',
-            'Call the repair technician at 4128889799 to arrange appliance service.',
-            now(), now()
         )
         ON CONFLICT (id) DO UPDATE SET
             user_id = EXCLUDED.user_id,
@@ -114,20 +107,6 @@ def upgrade() -> None:
             'assistant', 'completed', 2,
             'We will arrange a replacement shipment and provide instructions for recycling the damaged unit.',
             now(), now()
-        ),
-        (
-            '00000000-0000-4000-8000-000000001003',
-            '00000000-0000-4000-8000-000000000202',
-            'user', 'completed', 1,
-            'My appliance is broken. Who should I call for repairs?',
-            now(), now()
-        ),
-        (
-            '00000000-0000-4000-8000-000000001004',
-            '00000000-0000-4000-8000-000000000202',
-            'assistant', 'completed', 2,
-            'Call the repair technician at 4128889799 to arrange appliance service.',
-            now(), now()
         )
         ON CONFLICT (id) DO UPDATE SET
             conversation_id = EXCLUDED.conversation_id,
@@ -147,9 +126,7 @@ def downgrade() -> None:
         DELETE FROM conversation_messages
         WHERE id IN (
             '00000000-0000-4000-8000-000000001001',
-            '00000000-0000-4000-8000-000000001002',
-            '00000000-0000-4000-8000-000000001003',
-            '00000000-0000-4000-8000-000000001004'
+            '00000000-0000-4000-8000-000000001002'
         )
         """
     )
@@ -157,8 +134,7 @@ def downgrade() -> None:
         """
         DELETE FROM conversations
         WHERE id IN (
-            '00000000-0000-4000-8000-000000000201',
-            '00000000-0000-4000-8000-000000000202'
+            '00000000-0000-4000-8000-000000000201'
         )
         """
     )
