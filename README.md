@@ -26,7 +26,7 @@ Use the shared account below to view the seeded test conversations:
 Example questions include:
 
 - `My coffee maker arrived damaged. What should support do?`
-- `电器坏了找谁维修？`
+- `My appliance is broken. Who should I call for repairs?`
 
 The appliance-repair example directs the customer to call the repair technician
 at `4128889799`.

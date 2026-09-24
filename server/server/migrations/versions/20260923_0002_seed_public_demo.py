@@ -82,8 +82,8 @@ def upgrade() -> None:
         (
             '00000000-0000-4000-8000-000000000202',
             (SELECT id FROM users WHERE email = '{DEMO_EMAIL}'),
-            '电器维修联系方式',
-            '请拨打维修员 4128889799 安排电器维修。',
+            'Broken appliance repair contact',
+            'Call the repair technician at 4128889799 to arrange appliance service.',
             now(), now()
         )
         ON CONFLICT (id) DO UPDATE SET
@@ -119,14 +119,14 @@ def upgrade() -> None:
             '00000000-0000-4000-8000-000000001003',
             '00000000-0000-4000-8000-000000000202',
             'user', 'completed', 1,
-            '电器坏了找谁维修？',
+            'My appliance is broken. Who should I call for repairs?',
             now(), now()
         ),
         (
             '00000000-0000-4000-8000-000000001004',
             '00000000-0000-4000-8000-000000000202',
             'assistant', 'completed', 2,
-            '请拨打维修员 4128889799 安排电器维修。',
+            'Call the repair technician at 4128889799 to arrange appliance service.',
             now(), now()
         )
         ON CONFLICT (id) DO UPDATE SET
