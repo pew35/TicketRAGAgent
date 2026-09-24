@@ -15,48 +15,36 @@ event or response without leaking low-level implementation details.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import Enum
+from enum import IntEnum
 from typing import Any, Literal
 
 EventType = Literal["status", "token", "sources", "error", "done"]
 
 
-class AgentStatusCode(str, Enum):
-    """Stable status and error codes emitted by the RAG agent."""
+class AgentStatusCode(IntEnum):
+    """Stable numeric status and error codes emitted by the RAG agent."""
 
-    STARTED = "STARTED"
-    VALIDATING_INPUT = "VALIDATING_INPUT"
-    EMBEDDING_STARTED = "EMBEDDING_STARTED"
-    EMBEDDING_COMPLETED = "EMBEDDING_COMPLETED"
-    SEARCH_STARTED = "SEARCH_STARTED"
-    SEARCH_COMPLETED = "SEARCH_COMPLETED"
-    NO_RESULTS = "NO_RESULTS"
-    CONTEXT_BUILD_STARTED = "CONTEXT_BUILD_STARTED"
-    CONTEXT_BUILD_COMPLETED = "CONTEXT_BUILD_COMPLETED"
-    GENERATION_STARTED = "GENERATION_STARTED"
-    GENERATION_COMPLETED = "GENERATION_COMPLETED"
-    COMPLETED = "COMPLETED"
+    STARTED = 0
+    VALIDATING_INPUT = 0
+    EMBEDDING_STARTED = 0
+    EMBEDDING_COMPLETED = 0
+    SEARCH_STARTED = 0
+    SEARCH_COMPLETED = 0
+    CONTEXT_BUILD_STARTED = 0
+    CONTEXT_BUILD_COMPLETED = 0
+    GENERATION_STARTED = 0
+    GENERATION_COMPLETED = 0
+    COMPLETED = 0
 
-    INVALID_QUESTION = "INVALID_QUESTION"
-    OLLAMA_EMBEDDING_FAILED = "OLLAMA_EMBEDDING_FAILED"
-    WEAVIATE_CONNECTION_FAILED = "WEAVIATE_CONNECTION_FAILED"
-    WEAVIATE_SEARCH_FAILED = "WEAVIATE_SEARCH_FAILED"
-    CONTEXT_BUILD_FAILED = "CONTEXT_BUILD_FAILED"
-    OLLAMA_GENERATION_FAILED = "OLLAMA_GENERATION_FAILED"
-    OLLAMA_STREAM_FAILED = "OLLAMA_STREAM_FAILED"
-    UNKNOWN_ERROR = "UNKNOWN_ERROR"
-
-
-ERROR_HTTP_STATUS_MAP: dict[AgentStatusCode, int] = {
-    AgentStatusCode.INVALID_QUESTION: 400,
-    AgentStatusCode.OLLAMA_EMBEDDING_FAILED: 502,
-    AgentStatusCode.WEAVIATE_CONNECTION_FAILED: 503,
-    AgentStatusCode.WEAVIATE_SEARCH_FAILED: 502,
-    AgentStatusCode.CONTEXT_BUILD_FAILED: 500,
-    AgentStatusCode.OLLAMA_GENERATION_FAILED: 502,
-    AgentStatusCode.OLLAMA_STREAM_FAILED: 502,
-    AgentStatusCode.UNKNOWN_ERROR: 500,
-}
+    UNKNOWN_ERROR = 2000
+    INVALID_QUESTION = 2001
+    OLLAMA_EMBEDDING_FAILED = 2002
+    WEAVIATE_SEARCH_FAILED = 2003
+    NO_RESULTS = 2004
+    CONTEXT_BUILD_FAILED = 2005
+    OLLAMA_GENERATION_FAILED = 2006
+    OLLAMA_STREAM_FAILED = 2007
+    WEAVIATE_CONNECTION_FAILED = 2009
 
 
 @dataclass(frozen=True)
@@ -72,7 +60,7 @@ class AgentEvent:
         """Serialize the event into a JSON-friendly dictionary."""
         return {
             "type": self.type,
-            "code": self.code.value,
+            "code": int(self.code),
             "content": self.content,
             "data": self.data,
         }
@@ -94,7 +82,7 @@ class AgentResponse:
         """Serialize the response into a JSON-friendly dictionary."""
         return {
             "success": self.success,
-            "code": self.code.value,
+            "code": int(self.code),
             "message": self.message,
             "answer": self.answer,
             "sources": self.sources,
@@ -124,17 +112,11 @@ class AgentError(Exception):
         self.cause = cause
         self.data = data or {}
 
-    @property
-    def http_status(self) -> int:
-        """Return the default HTTP status for API layers that expose this error."""
-        return ERROR_HTTP_STATUS_MAP.get(self.code, 500)
-
     def to_error_data(self) -> dict[str, Any]:
         """Return structured error details safe for logs and API responses."""
         error_data: dict[str, Any] = {
             "stage": self.stage,
             "error_type": type(self.cause).__name__ if self.cause else type(self).__name__,
-            "http_status": self.http_status,
         }
 
         if self.detail:

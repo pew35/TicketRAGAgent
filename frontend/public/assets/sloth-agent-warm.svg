@@ -1,0 +1,31 @@
+<svg width="900" height="900" viewBox="0 0 900 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Original warm sloth service assistant</title>
+  <defs>
+    <linearGradient id="furC" x1="205" y1="105" x2="690" y2="770" gradientUnits="userSpaceOnUse"><stop stop-color="#A77D58"/><stop offset="1" stop-color="#705035"/></linearGradient>
+    <linearGradient id="faceC" x1="300" y1="150" x2="600" y2="540" gradientUnits="userSpaceOnUse"><stop stop-color="#F4E0C0"/><stop offset="1" stop-color="#D2A77E"/></linearGradient>
+    <linearGradient id="cardiganC" x1="220" y1="560" x2="680" y2="865" gradientUnits="userSpaceOnUse"><stop stop-color="#617C74"/><stop offset="1" stop-color="#39554F"/></linearGradient>
+    <filter id="shadowC" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#182C27" flood-opacity="0.16"/></filter>
+  </defs>
+  <g filter="url(#shadowC)">
+    <path d="M222 786C238 642 310 554 450 554C590 554 662 642 678 786C683 828 650 862 608 862H292C250 862 217 828 222 786Z" fill="url(#cardiganC)"/>
+    <path d="M377 582H523L501 862H399L377 582Z" fill="#FFF4E8"/>
+    <path d="M450 102C568 102 658 210 658 340C658 476 568 582 450 582C332 582 242 476 242 340C242 210 332 102 450 102Z" fill="url(#furC)"/>
+    <path d="M303 336C303 230 368 154 450 154C532 154 597 230 597 336C597 456 532 542 450 542C368 542 303 456 303 336Z" fill="url(#faceC)"/>
+    <path d="M294 210C336 139 394 102 450 102C506 102 564 139 606 210C555 183 508 172 450 172C392 172 345 183 294 210Z" fill="#7A563A"/>
+    <path d="M321 300C352 263 398 250 435 276C400 290 375 320 360 354C344 340 332 321 321 300Z" fill="#765339"/>
+    <path d="M579 300C548 263 502 250 465 276C500 290 525 320 540 354C556 340 568 321 579 300Z" fill="#765339"/>
+    <path d="M371 363C388 380 414 380 431 363" stroke="#2A2530" stroke-width="14" stroke-linecap="round"/>
+    <path d="M469 363C486 380 512 380 529 363" stroke="#2A2530" stroke-width="14" stroke-linecap="round"/>
+    <path d="M450 403C441 420 440 442 462 450" stroke="#8C6345" stroke-width="11" stroke-linecap="round"/>
+    <path d="M398 472C428 506 472 506 502 472" stroke="#694A35" stroke-width="13" stroke-linecap="round"/>
+    <rect x="205" y="296" width="58" height="120" rx="29" fill="#2B3A3D"/>
+    <rect x="637" y="296" width="58" height="120" rx="29" fill="#2B3A3D"/>
+    <path d="M252 308C255 222 309 155 383 128" stroke="#2B3A3D" stroke-width="18" stroke-linecap="round"/>
+    <path d="M648 308C645 222 591 155 517 128" stroke="#2B3A3D" stroke-width="18" stroke-linecap="round"/>
+    <path d="M653 414C654 489 599 526 535 522" stroke="#2B3A3D" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="526" cy="521" r="16" fill="#2B3A3D"/>
+    <circle cx="450" cy="690" r="24" fill="#8AA79E"/>
+    <path d="M197 790C219 742 263 710 318 702L344 842H236C202 842 183 820 197 790Z" fill="#8F6849"/>
+    <path d="M703 790C681 742 637 710 582 702L556 842H664C698 842 717 820 703 790Z" fill="#8F6849"/>
+  </g>
+</svg>

@@ -1,0 +1,37 @@
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${SERVER_DB_USER:-server}
+      POSTGRES_PASSWORD: ${SERVER_DB_PASS:-server}
+      POSTGRES_DB: ${SERVER_DB_BASE:-server}
+    ports:
+      - "${SERVER_DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    restart: always
+    command: ["redis-server", "--requirepass", "${SERVER_REDIS_PASS:-server}", "--appendonly", "yes"]
+    ports:
+      - "${SERVER_REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a ${SERVER_REDIS_PASS:-server} ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  postgres_data:
+  redis_data:

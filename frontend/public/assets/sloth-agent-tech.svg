@@ -1,0 +1,32 @@
+<svg width="900" height="900" viewBox="0 0 900 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Original sloth technical support agent</title>
+  <defs>
+    <linearGradient id="furB" x1="205" y1="110" x2="690" y2="770" gradientUnits="userSpaceOnUse"><stop stop-color="#8E6B4D"/><stop offset="1" stop-color="#5F4330"/></linearGradient>
+    <linearGradient id="faceB" x1="300" y1="150" x2="600" y2="540" gradientUnits="userSpaceOnUse"><stop stop-color="#F0D7B6"/><stop offset="1" stop-color="#C49A72"/></linearGradient>
+    <linearGradient id="hoodB" x1="210" y1="555" x2="690" y2="865" gradientUnits="userSpaceOnUse"><stop stop-color="#255E6F"/><stop offset="1" stop-color="#173B4A"/></linearGradient>
+    <filter id="shadowB" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#10202A" flood-opacity="0.2"/></filter>
+  </defs>
+  <g filter="url(#shadowB)">
+    <path d="M218 790C232 636 305 548 450 548C595 548 668 636 682 790C686 830 654 864 614 864H286C246 864 214 830 218 790Z" fill="url(#hoodB)"/>
+    <path d="M352 584C379 620 414 638 450 638C486 638 521 620 548 584L514 864H386L352 584Z" fill="#DFF4F4"/>
+    <path d="M450 104C570 104 664 212 664 342C664 480 570 584 450 584C330 584 236 480 236 342C236 212 330 104 450 104Z" fill="url(#furB)"/>
+    <path d="M298 336C298 228 365 150 450 150C535 150 602 228 602 336C602 458 535 542 450 542C365 542 298 458 298 336Z" fill="url(#faceB)"/>
+    <path d="M318 296C352 253 398 244 435 274C398 288 374 318 358 356C340 340 329 322 318 296Z" fill="#624632"/>
+    <path d="M582 296C548 253 502 244 465 274C502 288 526 318 542 356C560 340 571 322 582 296Z" fill="#624632"/>
+    <path d="M368 366C388 384 415 384 435 366" stroke="#27222B" stroke-width="14" stroke-linecap="round"/>
+    <path d="M465 366C485 384 512 384 532 366" stroke="#27222B" stroke-width="14" stroke-linecap="round"/>
+    <path d="M450 405C439 424 438 448 464 452" stroke="#816044" stroke-width="11" stroke-linecap="round"/>
+    <path d="M405 480C435 504 466 504 496 480" stroke="#604530" stroke-width="13" stroke-linecap="round"/>
+    <rect x="198" y="302" width="62" height="126" rx="31" fill="#1F2E3A"/>
+    <rect x="640" y="302" width="62" height="126" rx="31" fill="#1F2E3A"/>
+    <path d="M252 314C253 222 310 151 390 126" stroke="#1F2E3A" stroke-width="18" stroke-linecap="round"/>
+    <path d="M648 314C647 222 590 151 510 126" stroke="#1F2E3A" stroke-width="18" stroke-linecap="round"/>
+    <path d="M660 424C650 495 596 532 532 526" stroke="#1F2E3A" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="523" cy="524" r="16" fill="#1F2E3A"/>
+    <rect x="330" y="612" width="240" height="136" rx="22" fill="#22364A"/>
+    <path d="M376 680H524" stroke="#6DD3D5" stroke-width="12" stroke-linecap="round"/>
+    <path d="M400 720H500" stroke="#A4F0E8" stroke-width="10" stroke-linecap="round"/>
+    <path d="M198 792C224 742 271 711 330 704L354 846H238C203 846 182 824 198 792Z" fill="#7A5A40"/>
+    <path d="M702 792C676 742 629 711 570 704L546 846H662C697 846 718 824 702 792Z" fill="#7A5A40"/>
+  </g>
+</svg>

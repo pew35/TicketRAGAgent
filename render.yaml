@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: ticket-rag-agent
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: SERVER_ENVIRONMENT
+        value: production
+      - key: SERVER_RELOAD
+        value: "false"
+      - key: SERVER_AGENT_MODE
+        value: internal
+      - key: SERVER_REDIS_ENABLED
+        value: "false"
+      - key: SERVER_CORS_ALLOW_ORIGINS
+        value: '["*"]'
+      - key: SERVER_CORS_ALLOW_CREDENTIALS
+        value: "false"
+      - key: SERVER_LLM_API_URL
+        value: https://openrouter.ai/api/v1/chat/completions
+      - key: SERVER_LLM_MODEL
+        value: openrouter/free
+      - key: SERVER_LLM_SITE_NAME
+        value: TicketRAGAgent
+      - key: SERVER_JWT_SECRET_KEY
+        generateValue: true
+      - key: SERVER_DATABASE_URL
+        sync: false
+      - key: SERVER_LLM_API_KEY
+        sync: false

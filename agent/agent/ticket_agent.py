@@ -54,15 +54,13 @@ class TicketSource:
     similarity: float
 
     def to_context_block(self, index: int) -> str:
-        """Format this source as a compact block for the RAG prompt."""
+        """Format customer-safe reference facts for the answer prompt."""
         return f"""
-[{index}] Ticket ID: {self.ticket_id}
+Reference {index}
 Issue Type: {self.issue_type}
-Priority: {self.priority}
-Similarity: {self.similarity:.3f}
 Customer Problem:
 {self.description}
-Solution:
+Past Resolution Example (possible guidance, not a promise for this customer):
 {self.solution}
 """.strip()
 
@@ -319,6 +317,61 @@ class TicketRAGAgent:
             metadata=metadata,
         )
 
+    def generate_title(self, question: str, max_length: int = 40) -> str:
+        """Generate a short conversation title from the user's first question."""
+        clean_question = self._validate_question(question)
+        prompt = f"""
+Create a short English title for this customer support conversation.
+
+Rules:
+- Return only the title text.
+- Use 3 to 6 words.
+- Maximum {max_length} characters.
+- No quotes, punctuation, prefixes, explanations, or full sentence.
+- Focus on the product issue and requested action.
+
+Customer question: {clean_question}
+""".strip()
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "You write compact conversation titles. Return only the "
+                    "title and nothing else."
+                ),
+            },
+            {"role": "user", "content": prompt},
+        ]
+
+        try:
+            response = self.llm.invoke(messages)
+        except Exception as exc:
+            raise AgentError(
+                AgentStatusCode.OLLAMA_STREAM_FAILED,
+                "Failed to generate conversation title.",
+                stage="title_generation",
+                detail=str(exc),
+                cause=exc,
+                data={"model": self.config.ollama.chat_model},
+            ) from exc
+
+        return self._clean_title(self._extract_chat_content(response), max_length)
+
+    def _clean_title(self, title: str, max_length: int) -> str:
+        """Normalize and trim a model-generated conversation title."""
+        cleaned = " ".join(title.strip().strip("\"'`").split())
+        lowered = cleaned.lower()
+        for prefix in ("title:", "conversation title:", "short title:"):
+            if lowered.startswith(prefix):
+                cleaned = cleaned[len(prefix) :].strip()
+                break
+
+        cleaned = cleaned.split("\n", 1)[0].strip(" .,:;!?\"'`")
+        if len(cleaned) > max_length:
+            cleaned = cleaned[:max_length].rsplit(" ", 1)[0] or cleaned[:max_length]
+
+        return cleaned
+
     def _validate_question(self, question: str) -> str:
         """Validate and normalize the user question before external calls."""
         if not isinstance(question, str):
@@ -550,17 +603,17 @@ def main() -> None:
                 timing += f" stage={stage_ms}ms"
 
         if event.type == "status":
-            print(f"\n[{event.code.value}] {event.content}{timing}")
+            print(f"\n[{int(event.code)}] {event.content}{timing}")
         elif event.type == "sources":
-            print(f"\n[{event.code.value}] {event.content}{timing}")
+            print(f"\n[{int(event.code)}] {event.content}{timing}")
         elif event.type == "token":
             print(event.content, end="", flush=True)
         elif event.type == "error":
-            print(f"\n[{event.code.value}] {event.content}{timing}")
+            print(f"\n[{int(event.code)}] {event.content}{timing}")
             if event.data:
                 print(event.data)
         elif event.type == "done":
-            print(f"\n[{event.code.value}] {event.content}{timing}")
+            print(f"\n[{int(event.code)}] {event.content}{timing}")
 
 
 if __name__ == "__main__":

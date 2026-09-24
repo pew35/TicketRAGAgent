@@ -1,0 +1,34 @@
+<svg width="900" height="900" viewBox="0 0 900 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Original sloth frontdesk support agent</title>
+  <defs>
+    <linearGradient id="furA" x1="210" y1="95" x2="680" y2="760" gradientUnits="userSpaceOnUse"><stop stop-color="#9B7857"/><stop offset="1" stop-color="#684A35"/></linearGradient>
+    <linearGradient id="faceA" x1="310" y1="160" x2="590" y2="530" gradientUnits="userSpaceOnUse"><stop stop-color="#F3DEC0"/><stop offset="1" stop-color="#C99F77"/></linearGradient>
+    <linearGradient id="suitA" x1="230" y1="560" x2="690" y2="860" gradientUnits="userSpaceOnUse"><stop stop-color="#3C4D63"/><stop offset="1" stop-color="#253044"/></linearGradient>
+    <filter id="shadowA" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#172033" flood-opacity="0.18"/></filter>
+  </defs>
+  <g filter="url(#shadowA)">
+    <path d="M220 785C235 642 307 552 450 552C593 552 665 642 680 785C684 826 652 862 611 862H289C248 862 216 826 220 785Z" fill="url(#suitA)"/>
+    <path d="M374 568H526L496 862H404L374 568Z" fill="#F7F5EF"/>
+    <path d="M450 98C568 98 658 208 658 340C658 475 568 580 450 580C332 580 242 475 242 340C242 208 332 98 450 98Z" fill="url(#furA)"/>
+    <path d="M302 334C302 225 369 148 450 148C531 148 598 225 598 334C598 454 531 540 450 540C369 540 302 454 302 334Z" fill="url(#faceA)"/>
+    <path d="M292 205C335 133 396 98 450 98C504 98 565 133 608 205C560 178 512 166 450 166C388 166 340 178 292 205Z" fill="#76533A"/>
+    <path d="M324 296C354 258 397 246 433 272C397 286 374 314 360 350C343 335 333 317 324 296Z" fill="#705139"/>
+    <path d="M576 296C546 258 503 246 467 272C503 286 526 314 540 350C557 335 567 317 576 296Z" fill="#705139"/>
+    <path d="M372 360C389 378 414 378 431 360" stroke="#2B2530" stroke-width="14" stroke-linecap="round"/>
+    <path d="M469 360C486 378 511 378 528 360" stroke="#2B2530" stroke-width="14" stroke-linecap="round"/>
+    <path d="M450 402C443 418 439 432 441 443C444 456 456 462 468 453" stroke="#8A6244" stroke-width="11" stroke-linecap="round"/>
+    <path d="M405 476C433 500 468 500 496 476" stroke="#6A4A35" stroke-width="13" stroke-linecap="round"/>
+    <path d="M253 308C230 315 213 342 213 374C213 418 246 457 290 466" fill="#8B6649"/>
+    <path d="M647 308C670 315 687 342 687 374C687 418 654 457 610 466" fill="#8B6649"/>
+    <path d="M252 306C252 220 303 152 376 124" stroke="#253044" stroke-width="18" stroke-linecap="round"/>
+    <path d="M648 306C648 220 597 152 524 124" stroke="#253044" stroke-width="18" stroke-linecap="round"/>
+    <rect x="208" y="292" width="56" height="120" rx="28" fill="#2E394B"/>
+    <rect x="636" y="292" width="56" height="120" rx="28" fill="#2E394B"/>
+    <path d="M652 406C661 486 607 526 538 521" stroke="#2E394B" stroke-width="13" stroke-linecap="round"/>
+    <circle cx="529" cy="520" r="17" fill="#2E394B"/>
+    <rect x="375" y="610" width="150" height="76" rx="20" fill="#E8EDF5"/>
+    <path d="M407 648H493" stroke="#92A0B3" stroke-width="10" stroke-linecap="round"/>
+    <path d="M194 788C214 742 257 708 312 700L337 840H232C199 840 181 818 194 788Z" fill="#8A6749"/>
+    <path d="M706 788C686 742 643 708 588 700L563 840H668C701 840 719 818 706 788Z" fill="#8A6749"/>
+  </g>
+</svg>

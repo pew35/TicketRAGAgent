@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  color: #3f3028;
+  background: #eae7dd;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  font-family:
+    Manrope, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.display-font {
+  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  letter-spacing: 0;
+}
+
+.home-scroll {
+  scrollbar-color: rgb(153 119 92 / 55%) transparent;
+  scrollbar-width: thin;
+}
+
+.chat-scrollbar {
+  scrollbar-color: rgb(153 119 92 / 46%) transparent;
+  scrollbar-width: thin;
+}
+
+.chat-scrollbar::-webkit-scrollbar {
+  width: 7px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgb(153 119 92 / 42%);
+}
+
+.chat-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.home-story-card {
+  transform-origin: center center;
+}
+
+.portfolio-sign {
+  text-shadow: 0 1px 0 rgb(255 255 255 / 42%);
+}
+
+.scene-background-image {
+  filter: saturate(0.68) contrast(0.9) brightness(1.06);
+  opacity: 0.8;
+  transform: scale(1.025);
+}
+
+.scene-background-wash {
+  background:
+    linear-gradient(90deg, rgb(234 231 221 / 18%), rgb(234 231 221 / 34%) 48%, rgb(247 244 238 / 48%)),
+    linear-gradient(180deg, rgb(247 244 238 / 10%), rgb(153 119 92 / 8%));
+}
+
+.scene-wall-brand {
+  opacity: 0.72;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 38%);
+}
+
+@keyframes agentBreath {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.008);
+  }
+}
+
+@keyframes lightSweep {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: translateX(-8%) skewX(-12deg);
+  }
+  50% {
+    opacity: 0.42;
+    transform: translateX(8%) skewX(-12deg);
+  }
+}
+
+.agent-loop {
+  animation: agentBreath 6s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.agent-light-sweep {
+  animation: lightSweep 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .agent-loop,
+  .agent-light-sweep {
+    animation: none;
+  }
+
+  .home-story-card {
+    transition: none;
+  }
+}
